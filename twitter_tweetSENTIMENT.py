@@ -8,22 +8,7 @@ import matplotlib.pyplot as plt
 from prettytable import PrettyTable
 from collections import Counter
 from aylienapiclient import textapi
-import configparser
-import os
-import getpass
-
-config = configparser.RawConfigParser()
-config_file = os.path.expanduser('~/.twitter.conf')
-config.read(config_file)
-
-CONSUMER_KEY = config.get('twitter', 'CONSUMER_KEY')
-CONSUMER_SECRET = config.get('twitter', 'CONSUMER_SECRET')
-ACCESS_TOKEN = config.get('twitter', 'ACCESS_TOKEN')
-ACCESS_SECRET = config.get('twitter', 'ACCESS_SECRET')
- 
-
-
-
+import twitter_auth
 
 if sys.version_info[0] < 3:
     input = raw_input
@@ -34,8 +19,8 @@ application_id = "969ed6bf"
 application_key = "2627811d7c0000135c5ba6823b24c965"
 
 #further twitter authorisations
-auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
+auth = tweepy.OAuthHandler(twitter_auth.CONSUMER_KEY, twitter_auth.CONSUMER_SECRET)
+auth.set_access_token(twitter_auth.ACCESS_TOKEN, twitter_auth.ACCESS_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
 #sets up an instance of the AYLIEN text API

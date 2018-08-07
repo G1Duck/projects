@@ -7,8 +7,9 @@ import time
 import csv
 import sys
 import mysql.connector
+import twitter_auth
 
-cnx = mysql.connector.connect(user='daniella', password='munck1n',
+cnx = mysql.connector.connect(user='daniella', password='XXXXXX',
 				unix_socket='/var/run/mysqld/mysqld.sock',
 				database='daniellastweets',
                                 charset = 'utf8mb4')
@@ -16,14 +17,9 @@ cnx = mysql.connector.connect(user='daniella', password='munck1n',
 cursor = cnx.cursor()
 
 #authorises twitter
-CONSUMER_KEY = 'JQTLSIh5bCwb0sWc4qPu6PmNF'
-CONSUMER_SECRET = 'ump6jtorie2XqnJPvK1faEsL46A1nWykte03ZYrWHO2TQ79Sq9'
-ACCESS_TOKEN = '2572709161-oJYqUylg3UFVMEDJB3MNRoih4X0D5i9zENCb8qG'
-ACCESS_SECRET = 'UAtP868uKh8Gu79ChSMcMJwaHfkd1830lMbcPRzf4NebJ'
-
 #authorisations
-auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
+auth = tweepy.OAuthHandler(twitter_auth.CONSUMER_KEY, twitter_auth.CONSUMER_SECRET)
+auth.set_access_token(twitter_auth.ACCESS_TOKEN, twitter_auth.ACCESS_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
 counter = 0
