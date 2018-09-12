@@ -51,9 +51,9 @@ for i in screen_names:
             if 'RT' in status.full_text:
                 continue
             counter = counter + 1 
-            print(f"{counter}\t{status.user.id}\t{status.user.screen_name}\t{status.created_at}\t{status.id}\t{status.full_text}")
-            f.writerow([counter, user.screen_name, user.followers_count, status.full_text, status.created_at, status.favorite_count, status.retweet_count, user.id])
-            if counter > 4:
+            print(f"{counter}\t{status.user.followers_count}\t{status.user.screen_name}\t{status.created_at}\t{status.id}\t{status.full_text}")
+            f.writerow([counter, user.screen_name, status.user.followers_count, status.full_text, status.created_at, status.favorite_count, status.retweet_count, user.id])
+            if counter > 99:
                 break
     except tweepy.TweepError:
         systime.sleep(60 * 5)
