@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-122217984-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-122217984-1');
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KGKTTTG');</script>
+<!-- End Google Tag Manager -->
+
+	
+		<meta charset="utf-8">
+		<title>WHO - Family Planning</title>
+
+                <style type="text/css">
+                 body {
+                        background-color: #fff;
+                        width: 100%;
+                        font-family: "PT Mono", Times, serif;
+                        color: black;
+                        font-size: 14px;
+                        text-decoration: none;
+                }
+		text,
+		.axis text { 
+			font-family: "PT Mono", Times, serif;
+                        color: grey;
+                        font-size: 10px;
+                        text-decoration: none;
+		}
+		.avg{
+			stroke: #66cdaa;
+			stroke-dasharray: 2, 3;
+		}
+		.dangerLabel{
+			font-family: "PT Mono", Times, serif;
+			color: #2f2f2f;
+			font-size: 10px;
+			font-weight: bold;
+		}
+                .axis path,
+                .axis line {
+                        stroke: #60605B;
+                        stroke-width: 1px;
+                        stroke-opacity: 0.2;
+                        shape-rendering: crispEdges;
+                }
+                .axis text{
+                        fill: #2f2f2f;
+                        stroke: none;
+                        shape-rendering: crispEdges;
+                        opacity: 0.8;
+                }
+                rect:hover {
+                        fill: #60605B;
+                        opacity: 0.8;
+		}
+
+
+
+		</style>
+
+		<script type="text/javascript" src="d3.js"></script>
+	</head>
+	
+	<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGKTTTG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<b><font size="5">World Health Organisation Data [13.09.18]</font><br></b>
+Visualising a World Health Organisation dataset using d3.js. <p><p><p>
+<b>Married or in-union women of reproductive age who have their need for family planning satisfied with modern methods (%)</b>
+<script type="text/javascript">
+
+	//declare global variables 
+	var w = 600, h = 250, padding = 30, margin = 30;
+
+	//import the .csv data
+	d3.csv("WHO_familyplanningdata.csv", function(data) {
+		console.log(data)});
+
+	//create the SVG
+	var svg = d3.select("body")
+		.append("svg")
+		.attr("width", w)
+		.attr("height", h);
+
+        //import the .csv data
+        d3.csv("WHO_familyplanningdata.csv", function(data) {
+                console.log(data); 
+
+        //creating axes 
+        
+        var yScale = d3.scaleLinear()
+                .domain([0, d3.max(data, function(d) { return (+d.percentage);})])
+                .range([0, h - padding]);
+	//maybe clean the above out later?
+
+	var xValue = function(d,i) { return d.WHO_region; };
+
+	var xScale = d3.scalePoint()
+		.domain(data.map(xValue))
+               	.range([padding * 2, w-padding]);
+
+	//create rects, and add them to the SVG 
+	svg.selectAll("rect")
+		.data(data)
+		.enter()
+		.append("rect")
+		.attr("fill","#cccc")
+		.attr("x", function(d,i) {
+			return i * (w / data.length) + (padding * 1.4);
+		}) //distributes them across the x axis 
+		.attr("y", function(d, i) {
+			return h - yScale(+d.percentage) - padding;
+		})
+		.attr("width", (w / data.length) /2)
+		.attr("height", function(d, i) {
+			return yScale(+d.percentage);
+		})
+		.on("mouseover", function(d) {
+			div.transition()
+			.duration(200)
+			.style("opacity",.9)
+		})
+		.on("mouseout", function(d) {
+			div.transition()
+			.style("opacity",0)});
+	
+	//create labels 
+	svg.selectAll("text")
+		.attr("class", "columnLabel")
+		.data(data)
+		.enter()
+		.append("text")
+		.text(function(d, i) {
+			return +d.percentage + "%";
+		})
+                .attr("x", function(d,i) {
+                        return i * (w / data.length) + (padding * 1.4) + 8;
+                }) //distributes them across the x axis 
+                .attr("y", h - padding - 10)
+		.attr("fill", "black")
+
+	//creating axes 
+	
+	var yScale = d3.scaleLinear()
+		.domain([0, d3.max(data, function(d) { return (+d.percentage);})])
+		.range([h - padding, 0]);
+
+	var yAxis = d3.axisLeft()
+		.scale(yScale);
+
+	var xAxis = d3.axisBottom()
+		.scale(xScale);
+
+	//calling axes
+
+	svg.append("g")
+		.attr("class", "axis")
+		.attr("transform", "translate(" + (padding + 10) + ",0)")
+		.call(yAxis);
+
+	svg.append("g")
+		.attr("class", "axis")
+		.attr("transform", "translate(0," + 220 + ")")
+		.call(xAxis);
+
+
+        //create the averages
+       svg.append("line")
+                .attr("class","avg line")
+                .attr("x1",(padding * 1.4))
+                .attr("x2",w)
+                .attr("y1",yScale(77.4))
+                .attr("y2",yScale(77.4));
+
+	//create the label for the avg line
+	svg.append("text")
+		.attr("class","dangerLabel")
+		.attr("x", w - padding - 85)
+		.attr("y",yScale(77.4) - 7)
+		.text("WHO average = 77.4%");
+
+
+
+
+}); //end of the data wrapping 
+</script>
+	</body>
+</html>
+
