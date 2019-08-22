@@ -9,12 +9,13 @@ from prettytable import PrettyTable
 from collections import Counter
 from aylienapiclient import textapi
 import twitter_auth
+import aylien_auth
 if sys.version_info[0] < 3:
     input = raw_input
 
 #aylien credentials
-application_id = "969ed6bf"
-application_key = "2627811d7c0000135c5ba6823b24c965"
+application_id = aylien_auth.APPLICATION_ID
+application_key = aylien_auth.APPLICATION_KEY
 
 #further twitter authorisations
 auth = tweepy.OAuthHandler(twitter_auth.CONSUMER_KEY, twitter_auth.CONSUMER_SECRET)
