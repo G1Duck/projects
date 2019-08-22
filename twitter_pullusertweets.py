@@ -1,6 +1,5 @@
-
 #imports necessary methods from Twitter library
-import json 
+import json
 import tweepy
 import time
 import csv
@@ -15,7 +14,7 @@ auth = tweepy.OAuthHandler(twitter_auth.CONSUMER_KEY, twitter_auth.CONSUMER_SECR
 auth.set_access_token(twitter_auth.ACCESS_TOKEN, twitter_auth.ACCESS_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
-#opens the csv 
+#opens the csv
 f = csv.writer(open('/var/www/daniella.work/daniellatweets.csv', 'w'))
 f.writerow(["number","user_id", "Username", "twet_time", "tweet", "fav_count", "RT_flag"])
 
@@ -29,5 +28,3 @@ for status in tweepy.Cursor(api.user_timeline, screen_name="daniellameaneyy", tw
 
 #    if counter > 49:
 #        break
-
-

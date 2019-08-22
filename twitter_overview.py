@@ -1,4 +1,4 @@
-##!/usr/bin/python3.6 #establishes which version of python this'll run in  
+##!/usr/bin/python3.6 #establishes which version of python this'll run in
 #uses a query
 
 import json
@@ -25,7 +25,7 @@ for tweet in tweepy.Cursor(api.search,
                            result_type="recent",
                            include_entities=True,
                            lang="en").items():
-    #start declaring variables here! 
+    #start declaring variables here!
     tags = []
     favorite_count = tweet.favorite_count
     retweeted = tweet.retweeted
@@ -52,10 +52,6 @@ for tweet in tweepy.Cursor(api.search,
 
 
     print(f"{counter}\t{tweet_id}\t{text}\t{retweet_count}\t{user_screename}\t{urls}\t{tags}\t{users_mentioned}")
-    counter = counter + 1 
+    counter = counter + 1
     if counter > 100:
         break
-
-
-
-

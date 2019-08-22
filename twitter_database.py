@@ -1,7 +1,7 @@
 #GOAL: save tweets to a database
 
 #imports necessary methods from Twitter library
-import json 
+import json
 import tweepy
 import time
 import csv

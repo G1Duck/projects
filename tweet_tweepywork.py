@@ -11,9 +11,9 @@ from prettytable import PrettyTable
 import itertools
 import collections
 from datetime import date
-import calendar 
-from urllib.parse import urlparse 
-import numpy as np                                                               
+import calendar
+from urllib.parse import urlparse
+import numpy as np
 import matplotlib.pyplot as plt
 
 #authorisations
@@ -21,7 +21,7 @@ auth = tweepy.OAuthHandler(twitter_auth.CONSUMER_KEY, twitter_auth.CONSUMER_SECR
 auth.set_access_token(twitter_auth.ACCESS_TOKEN, twitter_auth.ACCESS_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
-#opens the csv 
+#opens the csv
 #f = csv.writer(open('user_tweets.csv', 'w'))
 #f.writerow(["No.","User ID", "Username", "Tweet Time", "Tweet"])
 
@@ -33,7 +33,7 @@ screen_names_full = []
 hour_list = []
 DoW_list = []
 urls_big_list = []
-urls_domain = [] 
+urls_domain = []
 
 
 for status in tweepy.Cursor(api.user_timeline, screen_name="daniellameaneyy", tweet_mode="extended").items():
@@ -47,7 +47,7 @@ for status in tweepy.Cursor(api.user_timeline, screen_name="daniellameaneyy", tw
     time_month = time.month
     time_hour = time.hour
     time_DoW = calendar.day_name[time.weekday()]
-    #concatenates the two 
+    #concatenates the two
     time_conc_DoW_hour = str(time_DoW) + "_" + str(time_hour)
     screen_names = []
     #splits a tweet into its words, adds it to the mega word list
@@ -61,7 +61,7 @@ for status in tweepy.Cursor(api.user_timeline, screen_name="daniellameaneyy", tw
     for url in status.entities['urls']:
             urls.append(url['expanded_url'])
             url_P_1 = (urlparse(url['expanded_url']))
-            urls_domain.append(url_P_1.netloc)            
+            urls_domain.append(url_P_1.netloc)
     for user in status.entities['user_mentions']:
             screen_names.append(user['screen_name'])
             screen_names_full.append(user['screen_name'])
@@ -69,16 +69,16 @@ for status in tweepy.Cursor(api.user_timeline, screen_name="daniellameaneyy", tw
     hour_list.append(time_hour)
     tweet_list.append(status.full_text)
     DoW_list.append(time_DoW)
-    #defining URL vars 
+    #defining URL vars
     print(f"{tweet}")
 #print(f"{urls_domain}")
 
-    #prints time  summary 
+    #prints time  summary
     #print(f"{time_conc_DoW_hour}\t{time}\t{calendar.day_name[time.weekday()]}\t{time.hour}\t{time.month}\t{time.year}")
     #a counter to cap the number of tweets used
     #counter = counter + 1
     #if counter > 550:    #commented out break
-    #    break 
+    #    break
 
 #print(f"{urls_big_list}")
 #print(f"{screen_names_full}") NOTE: if you want to print the full result, intend @ wall
@@ -110,7 +110,7 @@ for status in tweepy.Cursor(api.user_timeline, screen_name="daniellameaneyy", tw
 #    print(pt)
 
 #import itertools
-#create bar chart 
+#create bar chart
 #print(hour_counter)
 
 #graph_hours = list(hour_counter.keys())

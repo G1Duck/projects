@@ -2,7 +2,7 @@
 #deals with timeouts on twitter
 
 #imports necessary methods from Twitter library
-import json 
+import json
 import tweepy
 import time as systime
 import csv
@@ -40,9 +40,9 @@ urls_domain = []
 hashtags_list = []
 user_mentions = []
 hour_and_DoW_list = []
-year_list = [] 
+year_list = []
 
-#counters dictionaries - calculating from the above lists 
+#counters dictionaries - calculating from the above lists
 word_counter = collections.Counter(word_list)
 urls_counter = collections.Counter(urls_domain)
 user_mentions_counter = collections.Counter(user_mentions)
@@ -56,8 +56,8 @@ years_counter = collections.Counter(year_list)
 #    td = csv.writer(dm)
 #    td.writerows(word_counter.items())
 
-#pulls the users from the list, and writes details to a file! 
-try: 
+#pulls the users from the list, and writes details to a file!
+try:
     for user in tweepy.Cursor(api.list_members, slug="uk-mps-labour", owner_screen_name="tweetminster", include_entities=True).items():
         screen_names.append(f"{user.screen_name}")
         print(f"{user.screen_name}\t{user.location}\t{user.statuses_count}\t{user.followers_count}\t{user.description}\t{user.friends_count}\t{user.name}") #this would print out a list of usernames & locations
@@ -67,7 +67,7 @@ try:
             try:
                 for status in tweepy.Cursor(api.user_timeline, screen_name=i, tweet_mode="extended").items():
                     backoff_counter = 1
-                    #opening up lists which are per row 
+                    #opening up lists which are per row
                     #managing the time stamps
 #                    time = status.created_at
                     users = []
@@ -79,14 +79,14 @@ try:
                     tweet = status.full_text
 #                    time_DoW = calendar.day_name[time.weekday()]
 #                    time_conc_DoW_hour = str(time_DoW) + "_" + str(time_hour)
-                    #loops to iterate through status entities 
+                    #loops to iterate through status entities
                     for word in tweet.split():
                         word_list.append(word)
                     for hashtag in status.entities['hashtags']:
                         tags.append(hashtag['text'])
                         hashtags_list.append(hashtag['text'])
                     for url in status.entities['urls']:
-                        urls.append(url['expanded_url'])        
+                        urls.append(url['expanded_url'])
                         url_P_1 = (urlparse(url['expanded_url']))
                         urls_domain.append(url_P_1.netloc)
                     for user in status.entities['user_mentions']:
@@ -96,9 +96,9 @@ try:
 #                    hour_list.append(time_hour)
 #                    DoW_list.append(time_DoW)
 #                    hour_and_DoW_list.append(time_conc_DoW_hour)
-#                    year_list.append(time_year)  
+#                    year_list.append(time_year)
                     #a counter whilst testing
-                    counter = counter + 1 
+                    counter = counter + 1
                     print(f"{counter}\t{tags}\t{urls}\t{users}\t{status.user.id}\t{status.user.screen_name}\t{status.created_at}\t{status.id}\t{status.full_text}")
             except tweepy.TweepError:
                 systime.sleep(60 * 5)
@@ -108,7 +108,7 @@ try:
                 print("tweep error avoided: tweepy.TweepError XXX1")
                 continue
 
-except tweepy.TweepError: 
+except tweepy.TweepError:
     systime.sleep(60 * 5)
     auth = tweepy.OAuthHandler(twitter_auth.CONSUMER_KEY, twitter_auth.CONSUMER_SECRET)
     auth.set_access_token(twitter_auth.ACCESS_TOKEN, twitter_auth.ACCESS_SECRET)

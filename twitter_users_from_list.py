@@ -1,11 +1,11 @@
-#GOAL: pulls details from a list of users! 
+#GOAL: pulls details from a list of users!
 
 import json
 import sys
 #imports necessary methods from Twitter library
 import tweepy
-import time 
-import csv 
+import time
+import csv
 import configparser
 import os
 import getpass
@@ -23,7 +23,5 @@ f.writerow(["Screen_name", "User_name", "User_description", "User_location", "Us
 print("Screen name\tName\tUser Description\tUser status count\tLocation\tFollower count\tFriends count\tVerified flag")
 for user in tweepy.Cursor(api.list_members, slug="uk-mps-labour", owner_screen_name="tweetminster").items():
     print(f"{user.screen_name}\t{user.name}\t{user.description}\t{user.statuses_count}\t{user.location}\t{user.followers_count}\t{user.friends_count}\t{user.verified}")
-    #writes a row to the .csv - needs to be in array output!!!     
+    #writes a row to the .csv - needs to be in array output!!!
     f.writerow([user.screen_name,user.name,user.description,user.statuses_count,user.location,user.followers_count,user.friends_count,user.verified])
-
-

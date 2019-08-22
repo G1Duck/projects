@@ -31,7 +31,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         text-decoration: none;
                 }
 		text,
-		.axis text { 
+		.axis text {
 			font-family: "PT Mono", Times, serif;
                         color: grey;
                         font-size: 10px;
@@ -83,7 +83,7 @@ Visualising a World Health Organisation dataset using d3.js. <p><p><p>
 <b>Married or in-union women of reproductive age who have their need for family planning satisfied with modern methods (%)</b>
 <script type="text/javascript">
 
-	//declare global variables 
+	//declare global variables
 	var w = 600, h = 250, padding = 30, margin = 30;
 
 	//import the .csv data
@@ -98,10 +98,9 @@ Visualising a World Health Organisation dataset using d3.js. <p><p><p>
 
         //import the .csv data
         d3.csv("WHO_familyplanningdata.csv", function(data) {
-                console.log(data); 
+                console.log(data);
 
-        //creating axes 
-        
+        //creating axes
         var yScale = d3.scaleLinear()
                 .domain([0, d3.max(data, function(d) { return (+d.percentage);})])
                 .range([0, h - padding]);
@@ -113,7 +112,7 @@ Visualising a World Health Organisation dataset using d3.js. <p><p><p>
 		.domain(data.map(xValue))
                	.range([padding * 2, w-padding]);
 
-	//create rects, and add them to the SVG 
+	//create rects, and add them to the SVG
 	svg.selectAll("rect")
 		.data(data)
 		.enter()
@@ -121,7 +120,7 @@ Visualising a World Health Organisation dataset using d3.js. <p><p><p>
 		.attr("fill","#cccc")
 		.attr("x", function(d,i) {
 			return i * (w / data.length) + (padding * 1.4);
-		}) //distributes them across the x axis 
+		}) //distributes them across the x axis
 		.attr("y", function(d, i) {
 			return h - yScale(+d.percentage) - padding;
 		})
@@ -138,7 +137,7 @@ Visualising a World Health Organisation dataset using d3.js. <p><p><p>
 			div.transition()
 			.style("opacity",0)});
 	
-	//create labels 
+	//create labels
 	svg.selectAll("text")
 		.attr("class", "columnLabel")
 		.data(data)
@@ -149,11 +148,11 @@ Visualising a World Health Organisation dataset using d3.js. <p><p><p>
 		})
                 .attr("x", function(d,i) {
                         return i * (w / data.length) + (padding * 1.4) + 8;
-                }) //distributes them across the x axis 
+                }) //distributes them across the x axis
                 .attr("y", h - padding - 10)
 		.attr("fill", "black")
 
-	//creating axes 
+	//creating axes
 	
 	var yScale = d3.scaleLinear()
 		.domain([0, d3.max(data, function(d) { return (+d.percentage);})])
@@ -193,11 +192,7 @@ Visualising a World Health Organisation dataset using d3.js. <p><p><p>
 		.attr("y",yScale(77.4) - 7)
 		.text("WHO average = 77.4%");
 
-
-
-
-}); //end of the data wrapping 
+}); //end of the data wrapping
 </script>
 	</body>
 </html>
-

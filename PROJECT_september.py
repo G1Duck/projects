@@ -2,7 +2,7 @@
 #deals with timeouts on twitter
 
 #imports necessary methods from Twitter library
-import json 
+import json
 import tweepy
 import csv
 import sys
@@ -12,8 +12,8 @@ import collections
 import calendar
 import configparser
 import os
-import time as systime 
-import twitter_auth 
+import time as systime
+import twitter_auth
 
 config = configparser.RawConfigParser()
 config_file = os.path.expanduser('~/.twitter.conf')
@@ -46,11 +46,11 @@ for user in tweepy.Cursor(api.list_members, slug="uk-mps-labour", owner_screen_n
 
 for i in screen_names:
     counter = 0
-    try: 
+    try:
         for status in tweepy.Cursor(api.user_timeline, screen_name=i, tweet_mode="extended").items():
             if 'RT' in status.full_text:
                 continue
-            counter = counter + 1 
+            counter = counter + 1
             print(f"{counter}\t{status.user.followers_count}\t{status.user.screen_name}\t{status.created_at}\t{status.id}\t{status.full_text}")
             f.writerow([counter, user.screen_name, status.user.followers_count, status.full_text, status.created_at, status.favorite_count, status.retweet_count, user.id])
             if counter > 99:
@@ -62,6 +62,3 @@ for i in screen_names:
         api = tweepy.API(auth, wait_on_rate_limit=True)
         print("tweep error avoided: tweepy.TweepError XXX1")
         continue
-
-
-

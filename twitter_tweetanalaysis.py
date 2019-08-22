@@ -7,9 +7,9 @@ import tweepy
 import time
 import csv
 import sys
-from collections import Counter 
+from collections import Counter
 from prettytable import PrettyTable
-import itertools 
+import itertools
 import collections
 import twitter_auth
 
@@ -18,7 +18,7 @@ auth = tweepy.OAuthHandler(twitter_auth.CONSUMER_KEY, twitter_auth.CONSUMER_SECR
 auth.set_access_token(twitter_auth.ACCESS_TOKEN, twitter_auth.ACCESS_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
-#opens the csv 
+#opens the csv
 #f = csv.writer(open('user_tweets.csv', 'w'))
 #f.writerow(["No.","User ID", "Username", "Tweet Time", "Tweet"])
 
@@ -50,20 +50,20 @@ for status in tweepy.Cursor(api.user_timeline, screen_name="daniellameaneyy", tw
             screen_names_full.append(user['screen_name'])
 
     tweet_list.append(status.full_text)
-    #screen_names_full.append(status.entities.screen_name) 
+    #screen_names_full.append(status.entities.screen_name)
     #print("attempt one")
     #print(f"{screen_names_full}\n**********")
     #print("end of attempt one")
     counter = counter + 1
     #if counter > 550:    #commented out break
-    #    break 
+    #    break
 #print(f"{screen_names_full}") NOTE: if you want to print the full result, intend @ wall
 word_list_clean = list(set(word_list) - set(word_list_minus))
 print(word_list_clean)
 
 
 
-#calculate word counts 
+#calculate word counts
 counter = collections.Counter(word_list_clean)
 #print(counter.most_common())
 #calculate screen names most mentioned
@@ -77,6 +77,5 @@ for label, data in (('Word', word_list_clean),
     pt = PrettyTable(field_names=[label, 'Count'])
     c = Counter(data)
     [pt.add_row(kv) for kv in c.most_common()[:20]]
-    pt.align[label], pt.align['Count'] = 'l', 'r' 
+    pt.align[label], pt.align['Count'] = 'l', 'r'
     print(pt)
-

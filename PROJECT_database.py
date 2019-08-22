@@ -1,7 +1,7 @@
 #GOAL: pull all tweets from all users who are memberis of a list.
 
 #imports necessary methods from Twitter library
-import json 
+import json
 import tweepy
 import time
 import csv
@@ -21,7 +21,7 @@ auth = tweepy.OAuthHandler(twitter_auth.CONSUMER_KEY, twitter_auth.CONSUMER_SECR
 auth.set_access_token(twitter_auth.ACCESS_TOKEN, twitter_auth.ACCESS_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
-#pulls the users from the list, and writes details to a file! 
+#pulls the users from the list, and writes details to a file!
 for user in tweepy.Cursor(api.list_members, slug="uk-mps-labour", owner_screen_name="tweetminster", include_entities=True).items():
     screen_names.append(f"{user.screen_name}")
     s.writerow([user.screen_name, user.location, user.statuses_count, user.followers_count, user.description, user.friends_count, user.name])
@@ -30,7 +30,7 @@ for i in screen_names:
     #returns all tweets of a user
     counter = 0
     for status in tweepy.Cursor(api.user_timeline, screen_name=i, since="2017-07-04", tweet_mode="extended").items():
-        #opening up lists which are per row 
+        #opening up lists which are per row
         tags = []
         urls = []
         locations = []
@@ -43,14 +43,14 @@ for i in screen_names:
         tweet = status.full_text
         time_DoW = calendar.day_name[time.weekday()]
         time_conc_DoW_hour = str(time_DoW) + "_" + str(time_hour)
-        #loops to iterate through status entities 
+        #loops to iterate through status entities
         for word in tweet.split():
             word_list.append(word)
         for hashtag in status.entities['hashtags']:
             tags.append(hashtag['text'])
             hashtags_list.append(hashtag['text'])
         for url in status.entities['urls']:
-            urls.append(url['expanded_url'])        
+            urls.append(url['expanded_url'])
             url_P_1 = (urlparse(url['expanded_url']))
             urls_domain.append(url_P_1.netloc)
         for user in status.entities['user_mentions']:
@@ -60,11 +60,11 @@ for i in screen_names:
         hour_list.append(time_hour)
         DoW_list.append(time_DoW)
         hour_and_DoW_list.append(time_conc_DoW_hour)
-        year_list.append(time_year)  
+        year_list.append(time_year)
         #a counter whilst testing
-        counter = counter + 1 
+        counter = counter + 1
         #if counter > 2:
-        #     break 
+        #     break
         print(f"{counter}\t{status.user.location}\t{tags}\t{urls}\t{users}\t{status.user.id}\t{status.user.screen_name}\t{status.created_at}\t{time_year}\t{time_month}\t{time_hour}\t{time_DoW}\t{time_conc_DoW_hour}\t{status.full_text}\t{status.favorite_count}\t{status.retweet_count}")
 
 
